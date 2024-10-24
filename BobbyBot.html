@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Are you Smarter than the Bobby Bot?</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 80%; margin: 0 auto; text-align: center; }
+        .title { display: flex; align-items: center; justify-content: center; font-size: 2em; }
+        .title img { margin: 0 10px; width: 50px; height: auto; }
+        .quiz-section { margin-top: 20px; }
+        .question { font-size: 1.2em; margin: 20px 0; }
+        .options { list-style-type: none; padding: 0; }
+        .options li { margin: 10px 0; }
+        .score { font-size: 1.5em; margin-top: 20px; }
+        .btn { padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; margin: 10px; display: inline-block; }
+        .btn:hover { background-color: #0056b3; }
+        .hidden { display: none; }
+        .button-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <span>Are you Smarter</span>
+            <img src="https://classroomclipart.com/image/static2/preview2/hat-wearing-cowboy-with-lasso-clipart-11359.jpg" alt="Cowboy Icon">
+            <span>Than The Bobby Bot?</span>
+        </div>
+        <div id="main-menu">
+            <h2>Select a Section to Start the Quiz</h2>
+            <div class="button-container">
+                <button class="btn" onclick="startQuiz('general')">General and Procedural Requirements</button>
+                <button class="btn" onclick="startQuiz('water')">Water System Design Requirements</button>
+                <button class="btn" onclick="startQuiz('sewer')">Sanitary Sewer Design Requirements</button>
+                <button class="btn" onclick="startQuiz('drainage')">Drainage Design Requirements</button>
+                <button class="btn" onclick="startQuiz('roadway')">Roadway Design Requirements and Wayfinding Signs</button>
+                <button class="btn" onclick="startQuiz('bmp')">Guidelines for Best Management Practices</button>
+            </div>
+        </div>
+        
+        <div id="quiz-container" class="quiz-section hidden">
+            <div id="question" class="question"></div>
+            <ul id="options" class="options"></ul>
+            <button class="btn" onclick="checkAnswer()">Next</button>
+            <button class="btn" onclick="cancelQuiz()">Cancel</button>
+        </div>
+
+        <div id="score-section" class="hidden">
+            <div id="score" class="score"></div>
+            <div id="recommendation"></div>
+            <button class="btn" onclick="startQuiz(currentSection)">Try Again</button>
+            <button class="btn" onclick="goHome()">Home</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = {
+            general: [
+                { question: "What is required before construction can begin?", options: ["Approval from City Engineer", "Approval from residents", "No approval needed", "Only verbal approval"], answer: 0 },
+                { question: "What is the minimum drawing size?", options: ["11x17", "22x34", "24x36", "36x48"], answer: 1 },
+                { question: "Who must approve the construction plans?", options: ["City Engineer", "City Manager", "Residents", "Contractor"], answer: 0 },
+                { question: "What must be included with all plans?", options: ["Legend", "Color coding", "Survey coordinates", "Scale of 1:50"], answer: 0 },
+                { question: "What is required for all easements?", options: ["Approval", "Special permit", "City ordinance", "Survey details"], answer: 2 },
+                { question: "When should the City be notified about progress?", options: ["At every stage", "Every week", "When requested", "Before starting a new phase"], answer: 3 },
+                { question: "What is needed for utility crossings?", options: ["Special approval", "Survey", "Permit", "Nothing"], answer: 0 },
+                { question: "Who keeps the approved product list?", options: ["City Engineer", "Contractor", "Residents", "Planning Commission"], answer: 0 },
+                { question: "What is the main concern in construction safety?", options: ["Time", "Budget", "Safety", "Materials"], answer: 2 },
+                { question: "What must be done to abandoned facilities?", options: ["Securely plug", "Demolish", "Ignore", "Reuse"], answer: 0 }
+            ],
+            water: [
+                { question: "What is the minimum water main size for single-family residential areas?", options: ["2 inches", "4 inches", "6 inches", "8 inches"], answer: 1 },
+                { question: "What should be provided at dead-end water mains?", options: ["Valve", "Blow-off", "Fire hydrant", "Nothing"], answer: 1 },
+                { question: "What is the required minimum clearance between water mains and other utilities?", options: ["4 feet", "6 feet", "9 feet", "12 feet"], answer: 2 },
+                { question: "How deep should water mains be buried?", options: ["2 feet", "3 feet", "4 feet", "5 feet"], answer: 2 },
+                { question: "What material is not allowed for water mains?", options: ["PVC", "Steel", "Copper", "Aluminum"], answer: 3 },
+                { question: "Who determines the layout of the water system?", options: ["City Engineer", "Residents", "Contractor", "Owner"], answer: 0 },
+                { question: "What should be installed at a water main crossing?", options: ["Steel casing", "PVC casing", "Wooden casing", "Aluminum casing"], answer: 0 },
+                { question: "What must be installed on new water lines for fire safety?", options: ["Fire hydrants", "Sprinkler heads", "Valves", "Meters"], answer: 0 },
+                { question: "What must be done to ensure water quality?", options: ["Chlorination", "Filtration", "Inspection", "Nothing"], answer: 0 },
+                { question: "What is the minimum pipe diameter for a fire hydrant lead?", options: ["4 inches", "6 inches", "8 inches", "10 inches"], answer: 1 }
+            ],
+            sewer: [
+                { question: "What is the minimum size for a sanitary sewer?", options: ["4 inches", "6 inches", "8 inches", "10 inches"], answer: 2 },
+                { question: "What is required for a sewer manhole?", options: ["Ventilation", "Access ladder", "Cover", "Flowmeter"], answer: 2 },
+                { question: "What material is commonly used for sanitary sewer pipes?", options: ["PVC", "Wood", "Steel", "Copper"], answer: 0 },
+                { question: "What slope should be maintained for sewer lines?", options: ["0.5%", "1%", "2%", "3%"], answer: 1 },
+                { question: "What is used to detect leaks in a sewer system?", options: ["Pressure test", "Smoke test", "Water flow test", "Magnetometer"], answer: 1 },
+                { question: "What is required at the start of a new sewer line?", options: ["Inspection", "Anchor block", "Valve", "Pump"], answer: 0 },
+                { question: "What is the minimum cover depth for sewer lines?", options: ["2 feet", "3 feet", "4 feet", "5 feet"], answer: 2 },
+                { question: "How often should sewer lines be inspected?", options: ["Annually", "Bi-annually", "Every 5 years", "Every 10 years"], answer: 0 },
+                { question: "Who approves changes to sewer design?", options: ["City Engineer", "Contractor", "Residents", "Federal authorities"], answer: 0 },
+                { question: "What must be done to a decommissioned sewer line?", options: ["Fill with sand", "Plug securely", "Demolish", "Ignore"], answer: 1 }
+            ],
+            drainage: [
+                { question: "What is required for storm sewer design?", options: ["Material selection", "Hydraulic calculations", "Flood plan", "All of the above"], answer: 3 },
+                { question: "What is the minimum pipe size for drainage?", options: ["8 inches", "10 inches", "12 inches", "15 inches"], answer: 2 },
+                { question: "How often should catch basins be cleaned?", options: ["Every 6 months", "Annually", "Every 2 years", "As needed"], answer: 1 },
+                { question: "What is required to control erosion?", options: ["Sediment basin", "Gravel blanket", "Retaining wall", "Vegetation"], answer: 0 },
+                { question: "Who determines the size of culverts?", options: ["City Engineer", "Contractor", "Residents", "Owner"], answer: 0 },
+                { question: "What is the typical slope for drainage ditches?", options: ["1%", "2%", "3%", "4%"], answer: 1 },
+                { question: "How is runoff measured?", options: ["Gallons", "Cubic feet per second", "Liters", "Meters per second"], answer: 1 },
+                { question: "What material is commonly used for drainage pipes?", options: ["PVC", "Clay", "Steel", "Concrete"], answer: 3 },
+                { question: "How should drainage channels be maintained?", options: ["Free of debris", "Filled with gravel", "Kept wet", "Covered with vegetation"], answer: 0 },
+                { question: "What must be done to prevent flooding?", options: ["Install pumps", "Increase drainage capacity", "Reduce slope", "Fill basins"], answer: 1 }
+            ],
+            roadway: [
+                { question: "What is the minimum vertical curve length?", options: ["100 feet", "150 feet", "200 feet", "250 feet"], answer: 1 },
+                { question: "What is required for road markings?", options: ["Reflective paint", "Non-slip material", "Color coding", "Embossing"], answer: 0 },
+                { question: "How wide should a sidewalk be?", options: ["3 feet", "4 feet", "5 feet", "6 feet"], answer: 2 },
+                { question: "What is the standard lane width?", options: ["9 feet", "10 feet", "11 feet", "12 feet"], answer: 3 },
+                { question: "Who determines speed limits?", options: ["City Engineer", "Residents", "State Department", "Planning Commission"], answer: 2 },
+                { question: "What is used to separate lanes?", options: ["Yellow line", "White line", "Barrier", "Curb"], answer: 1 },
+                { question: "What material is used for road paving?", options: ["Asphalt", "Gravel", "Concrete", "Sand"], answer: 0 },
+                { question: "How often should road surfaces be inspected?", options: ["Annually", "Every 2 years", "Every 5 years", "As needed"], answer: 0 },
+                { question: "What is the minimum shoulder width?", options: ["1 foot", "2 feet", "3 feet", "4 feet"], answer: 2 },
+                { question: "What should be installed at sharp curves?", options: ["Guardrails", "Reflective signs", "Speed bumps", "None"], answer: 0 }
+            ],
+            bmp: [
+                { question: "What is a primary goal of Best Management Practices?", options: ["Reduce pollution", "Increase construction time", "Reduce costs", "Increase water pressure"], answer: 0 },
+                { question: "What is a common BMP for erosion control?", options: ["Sediment fences", "Drainage channels", "Concrete barriers", "Sound walls"], answer: 0 },
+                { question: "How often should BMPs be inspected?", options: ["Weekly", "Bi-weekly", "Monthly", "Quarterly"], answer: 0 },
+                { question: "What is required for sediment control?", options: ["Sediment traps", "Concrete walls", "Retaining barriers", "Tree planting"], answer: 0 },
+                { question: "What is used to control dust?", options: ["Water spray", "Chemical agents", "Barriers", "Fans"], answer: 0 },
+                { question: "How can stormwater be treated?", options: ["Retention basins", "Evaporation ponds", "Septic tanks", "Catch basins"], answer: 0 },
+                { question: "What should be used for temporary stabilization?", options: ["Mulch", "Concrete", "Metal sheets", "Plastic covers"], answer: 0 },
+                { question: "What is important for protecting water quality?", options: ["Buffer zones", "Drainage ditches", "Retaining walls", "Concrete pavements"], answer: 0 },
+                { question: "What BMP can be used for slope stabilization?", options: ["Vegetation", "Rock barriers", "Concrete barriers", "Fencing"], answer: 0 },
+                { question: "How can construction sites reduce runoff?", options: ["Silt fences", "Increased slope", "Elimination of vegetation", "Reducing ground cover"], answer: 0 }
+            ]
+        };
+
+        let currentSection = '';
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function startQuiz(section) {
+            currentSection = section;
+            currentQuestions = questions[section].sort(() => 0.5 - Math.random()).slice(0, 10);
+            currentQuestionIndex = 0;
+            score = 0;
+
+            document.getElementById('main-menu').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('score-section').classList.add('hidden');
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < currentQuestions.length) {
+                const questionObj = currentQuestions[currentQuestionIndex];
+                document.getElementById('question').innerText = questionObj.question;
+                const optionsList = document.getElementById('options');
+                optionsList.innerHTML = '';
+
+                questionObj.options.forEach((option, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<input type="radio" name="option" value="${index}"> ${option}`;
+                    optionsList.appendChild(li);
+                });
+
+                currentQuestionIndex++;
+            } else {
+                showScore();
+            }
+        }
+
+        function checkAnswer() {
+            const options = document.getElementsByName('option');
+            let selectedOption;
+            for (const option of options) {
+                if (option.checked) {
+                    selectedOption = parseInt(option.value);
+                    break;
+                }
+            }
+
+            if (selectedOption === currentQuestions[currentQuestionIndex - 1].answer) {
+                score++;
+            }
+            nextQuestion();
+        }
+
+        function showScore() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('score-section').classList.remove('hidden');
+            document.getElementById('score').innerText = `You scored ${score} out of ${currentQuestions.length}`;
+
+            let recommendation = "Try again to improve your score!";
+            if (score >= 8) {
+                recommendation = "Excellent! You really know your stuff.";
+            } else if (score >= 5) {
+                recommendation = "Good job! But there’s room for improvement.";
+            }
+            document.getElementById('recommendation').innerText = recommendation;
+        }
+
+        function cancelQuiz() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('main-menu').classList.remove('hidden');
+        }
+
+        function goHome() {
+            document.getElementById('score-section').classList.add('hidden');
+            document.getElementById('main-menu').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
