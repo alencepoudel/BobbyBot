@@ -32,7 +32,7 @@
             <span>Than Bobby Bot?</span>
         </div>
         <div id="main-menu">
-            <h2>Let's check your knowledge!</h2>
+            <h2>Are you Smarter than Bobby Bot?</h2>
             <div class="button-container">
                 <button class="btn" onclick="selectQuizType('design')">Design Standards</button>
                 <button class="btn" onclick="selectQuizType('pmm')">Project Management Manual</button>
@@ -156,7 +156,7 @@
             ],
             drainage: [
                 { question: "What is required for storm sewer design?", options: ["Material selection", "Hydraulic calculations", "Flood plan", "All of the above"], answer: 3 },
-                { question: "What is the minimum pipe size for drainage?", options: ["8 inches", "10 inches", "12 inches", "15 inches"], answer: 2 },
+                { question: "What is the minimum pipe size for storm sewer line connecting to the public infrastructure?", options: ["8 inches", "10 inches", "12 inches", "24 inches"], answer: 4 },
                 { question: "How often should catch basins be cleaned?", options: ["Every 6 months", "Annually", "Every 2 years", "As needed"], answer: 1 },
                 { question: "What is required to control erosion?", options: ["Sediment basin", "Gravel blanket", "Retaining wall", "Vegetation"], answer: 0 },
                 { question: "Who determines the size of culverts?", options: ["City Engineer", "Contractor", "Residents", "Owner"], answer: 0 },
@@ -179,6 +179,9 @@
                 { question: "How should catch basins be placed?", options: ["Near low points", "Near high points", "Every 100 feet", "Next to trees"], answer: 0 },
                 { question: "What is used to measure water levels in a drainage system?", options: ["Staff gauge", "Manometer", "Flowmeter", "Thermometer"], answer: 0 },
                 { question: "How often should erosion control measures be inspected?", options: ["Weekly", "Monthly", "Quarterly", "Annually"], answer: 0 },
+		{ question: "What material is commonly used for drainage pipes connecting to the public infrastructure?", options: ["PVC", "Clay", "Steel", "Concrete"], answer: 3 },
+{ question: "What is the runoff coefficient value for landuse type - grass?", options: ["0.25", "0.3", "0.45", "0.9"], answer: 0 },
+{ question: "What is the runoff coefficient value for landuse type - concrete?", options: ["0.25", "0.3", "0.45", "0.95"], answer: 3 },
                 { question: "What is the best material for lining drainage channels?", options: ["Concrete", "Clay", "Plastic", "Wood"], answer: 0 }
             ],
             roadway: [
@@ -237,32 +240,40 @@
                 { question: "Who should approve changes to BMPs?", options: ["City Engineer", "Contractor", "Residents", "Anyone"], answer: 0 }
             ],
 pmm: [
-    { question: "What is a Work Breakdown Structure?", options: ["A project management tool", "A financial document", "A design guideline", "A construction material"], answer: 0 },
-    { question: "What should be done before project initiation?", options: ["Complete Project Charter", "Hire a consultant", "Start construction", "Send notice to public"], answer: 0 },
-    { question: "Who is responsible for coordinating project activities?", options: ["Project Manager", "Consultant", "City Engineer", "Contractor"], answer: 0 },
-    { question: "How often should project updates be reported?", options: ["Monthly", "Quarterly", "Annually", "Bi-annually"], answer: 1 },
-    { question: "What is required for risk management?", options: ["Identify potential issues", "Prepare a budget", "Design drawings", "Hire additional staff"], answer: 0 },
-    { question: "Which document formally authorizes a project to proceed?", options: ["Project Charter", "Project Plan", "Risk Assessment", "Contract Agreement"], answer: 0 },
-    { question: "What process ensures all project information is managed and communicated properly?", options: ["Project Communication Management", "Cost Control Management", "Resource Allocation", "Quality Assurance"], answer: 0 },
-    { question: "What should be used to track project milestones?", options: ["Project schedule", "Stakeholder registry", "Quality audit", "Safety inspection report"], answer: 0 },
-    { question: "Who should attend the project 'kick-off' meeting?", options: ["Project team and consultant", "Only the City Engineer", "Contractors and suppliers", "Community representatives"], answer: 0 },
-    { question: "Which plan includes communication requirements for stakeholders?", options: ["Communication Management Plan", "Risk Management Plan", "Cost Management Plan", "Quality Management Plan"], answer: 0 },
-    { question: "What is the purpose of periodic project status reports?", options: ["Provide updates to stakeholders", "Establish new project objectives", "Conduct safety audits", "Initiate procurement processes"], answer: 0 },
-    { question: "What should be included in the Asset Inventory form?", options: ["Details of the completed project", "Future budget estimates", "Planned risk mitigation strategies", "Supplier contact information"], answer: 0 },
-    { question: "What needs to be identified in the Project Charter?", options: ["Project scope and key stakeholders", "Final budget and expenses", "Construction methods", "Consultant evaluation"], answer: 0 },
-    { question: "How should changes to the project be managed?", options: ["Through a formal change control process", "By informal agreements", "Without documentation", "By the contractor alone"], answer: 0 },
-    { question: "What should the Project Manager ensure during project closeout?", options: ["All deliverables are completed and documented", "The construction phase is extended", "Additional funding is secured", "Only half of the tasks are finished"], answer: 0 },
-    { question: "What type of meeting should be held before construction begins?", options: ["Pre-construction meeting", "Safety review", "Budget meeting", "Community event"], answer: 0 },
-    { question: "What document provides a record of lessons learned?", options: ["Project closeout report", "Procurement log", "Budget ledger", "Training manual"], answer: 0 },
-    { question: "What should be discussed at the 'kick-off' meeting?", options: ["Scope, schedule, and deliverables", "Building permits", "Legal disputes", "Insurance claims"], answer: 0 },
-    { question: "What is the recommended approach to file management?", options: ["Standardized with centralized document storage", "Decentralized with individual records", "Ad hoc based on staff preferences", "Stored in contractor facilities"], answer: 0 },
-    { question: "How are project-specific procurement requirements determined?", options: ["Based on project funding source", "Only by the contractor", "Using general guidelines for all projects", "By the number of team members"], answer: 0 },
-    { question: "Who is responsible for monitoring project deliverables?", options: ["Project Manager", "City Manager", "Consultant only", "Stakeholders"], answer: 0 },
-    { question: "What should be done during the warranty period?", options: ["Follow contract agreement terms", "Hire additional contractors", "Initiate new project phases", "Ignore maintenance"], answer: 0 },
-    { question: "How are performance metrics used in project management?", options: ["To measure project progress and success", "To finalize contract agreements", "To determine staff assignments", "To allocate emergency funds"], answer: 0 },
-    { question: "When should stakeholder analysis be performed?", options: ["At the beginning of a project", "Only during emergencies", "After project closeout", "During construction only"], answer: 0 },
-    { question: "How should regular communication be managed in a project?", options: ["With periodic updates and reports", "Only through formal meetings", "By contractors", "Informally without documentation"], answer: 0 }
+    { question: "What is a Work Breakdown Structure?", options: ["A financial document", "A project management tool", "A design guideline", "A construction material"], answer: 1 },
+    { question: "What should be done before project initiation?", options: ["Start construction", "Hire a consultant", "Complete Project Charter", "Send notice to public"], answer: 2 },
+    { question: "Who is responsible for coordinating project activities?", options: ["Contractor", "City Engineer", "Consultant", "Project Manager"], answer: 3 },
+    { question: "How often should project updates be reported?", options: ["Annually", "Quarterly", "Monthly", "Bi-annually"], answer: 2 },
+    { question: "What is required for risk management?", options: ["Prepare a budget", "Identify potential issues", "Hire additional staff", "Design drawings"], answer: 1 },
+    { question: "Which document formally authorizes a project to proceed?", options: ["Notice to Proceed", "Risk Assessment", "Project Charter", "Contract Agreement"], answer: 0 },
+    { question: "What process ensures all project information is managed and communicated properly?", options: ["Cost Control Management", "Resource Allocation", "Quality Assurance", "Project Communication Management"], answer: 3 },
+    { question: "What should be used to track project milestones?", options: ["Safety inspection report", "Project schedule", "Quality audit", "Stakeholder registry"], answer: 1 },
+    { question: "Who should attend the project 'kick-off' meeting?", options: ["Project team and consultant", "Only the City Engineer", "Community representatives", "Contractors and suppliers"], answer: 0 },
+    { question: "Which plan includes communication requirements for stakeholders?", options: ["Risk Management Plan", "Quality Management Plan", "Cost Management Plan", "Communication Management Plan"], answer: 3 },
+    { question: "What is the purpose of periodic project status reports?", options: ["Establish new project objectives", "Initiate procurement processes", "Provide updates to stakeholders", "Conduct safety audits"], answer: 2 },
+    { question: "What should be included in the Asset Inventory form?", options: ["Future budget estimates", "Details of the completed project", "Supplier contact information", "Planned risk mitigation strategies"], answer: 1 },
+    { question: "What needs to be identified in the Project Charter?", options: ["Construction methods", "Consultant evaluation", "Final budget and expenses", "Project scope and key stakeholders"], answer: 3 },
+    { question: "How should changes to the project be managed?", options: ["Without documentation", "Through a formal change control process", "By informal agreements", "By the contractor alone"], answer: 1 },
+    { question: "What should the Project Manager ensure during project closeout?", options: ["The construction phase is extended", "Additional funding is secured", "Only half of the tasks are finished", "All deliverables are completed and documented"], answer: 3 },
+    { question: "What type of meeting should be held before construction begins?", options: ["Safety review", "Budget meeting", "Pre-construction meeting", "Community event"], answer: 2 },
+    { question: "What document provides a record of lessons learned?", options: ["Procurement log", "Budget ledger", "Training manual", "Project closeout report"], answer: 3 },
+    { question: "What should be discussed at the 'kick-off' meeting?", options: ["Legal disputes", "Scope, schedule, and deliverables", "Insurance claims", "Building permits"], answer: 1 },
+    { question: "What is the recommended approach to file management?", options: ["Decentralized with individual records", "Stored in contractor facilities", "Standardized with centralized document storage", "Ad hoc based on staff preferences"], answer: 2 },
+    { question: "How are project-specific procurement requirements determined?", options: ["Only by the contractor", "Based on project funding source", "Using general guidelines for all projects", "By the number of team members"], answer: 1 },
+    { question: "Who is responsible for monitoring project deliverables?", options: ["City Manager", "Stakeholders", "Consultant only", "Project Manager"], answer: 3 },
+    { question: "What should be done during the warranty period?", options: ["Follow contract agreement terms", "Initiate new project phases", "Ignore maintenance", "Hire additional contractors"], answer: 0 },
+    { question: "How are performance metrics used in project management?", options: ["To allocate emergency funds", "To determine staff assignments", "To measure project progress and success", "To finalize contract agreements"], answer: 2 },
+    { question: "When should stakeholder analysis be performed?", options: ["During construction only", "After project closeout", "At the beginning of a project", "Only during emergencies"], answer: 2 },
+    { question: "How should regular communication be managed in a project?", options: ["Only through formal meetings", "With periodic updates and reports", "By contractors", "Informally without documentation"], answer: 1 },
+
+    // Earned Value Management (EVM) Questions
+    { question: "What does Earned Value (EV) represent in EVM?", options: ["Total budget", "Cost of completed work", "Planned cost", "Remaining budget"], answer: 1 },
+    { question: "What is the formula for Schedule Variance (SV)?", options: ["EV - PV", "PV - EV", "AC - EV", "EV - AC"], answer: 0 },
+    { question: "Which term describes the actual cost incurred for the work performed?", options: ["Planned Value (PV)", "Actual Cost (AC)", "Earned Value (EV)", "Budget at Completion (BAC)"], answer: 1 },
+    { question: "What does a Cost Performance Index (CPI) less than 1 indicate?", options: ["Under budget", "On schedule", "Over budget", "Ahead of schedule"], answer: 2 },
+    { question: "How is Estimate at Completion (EAC) calculated?", options: ["AC + (BAC - EV)", "EV / PV", "BAC / CPI", "AC + EV"], answer: 0 }
 ]
+
         };
 
         let currentSection = '';
