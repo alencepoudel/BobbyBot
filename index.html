@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Are you Smarter than Bobby Bot?</title>
     <style>
-        body { font-family: Arial, sans-serif; }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; }
         .container { width: 80%; margin: 0 auto; text-align: center; }
         .title { display: flex; align-items: center; justify-content: center; font-size: 2em; }
         .title img { margin: 0 10px; width: 50px; height: auto; }
@@ -13,7 +13,7 @@
         .question { font-size: 1.2em; margin: 20px 0; }
         .options { list-style-type: none; padding: 0; }
         .options li { margin: 10px 0; }
-        .score { font-size: 1.5em; margin-top: 20px; }
+        .score-section { font-size: 1.5em; margin-top: 20px; }
         .btn { padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; margin: 10px; display: inline-block; }
         .btn:hover { background-color: #0056b3; }
         .hidden { display: none; }
@@ -22,6 +22,45 @@
         .scantron-item { margin-bottom: 10px; }
         .correct { color: green; }
         .incorrect { color: red; }
+
+        /* Result layout styling */
+        .result-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        .progress-circle {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            background-color: #4caf50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .result-summary {
+            text-align: left;
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+        .result-summary h3 { margin: 10px 0; color: #333; }
+        .result-summary .item { display: flex; align-items: center; }
+        .result-summary .item span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 50%;
+            background-color: #4caf50;
+        }
+        .result-summary .item.incorrect span { background-color: #f44336; }
     </style>
 </head>
 <body>
@@ -65,10 +104,19 @@
 
         <!-- Score Section -->
         <div id="score-section" class="hidden">
-            <div id="score" class="score"></div>
-            <div id="recommendation"></div>
+            <div class="result-container">
+                <div class="progress-circle" id="score-percentage">100%</div>
+                <div class="result-summary">
+                    <h3>Result Summary</h3>
+                    <div class="item correct"><span></span> Correct: <span id="correct-count"></span></div>
+                    <div class="item incorrect"><span></span> Incorrect: <span id="incorrect-count"></span></div>
+                    <div class="item">Total Questions: <span id="total-questions"></span></div>
+                    <h4 id="recommendation"></h4>
+                </div>
+            </div>
+
             <div class="scantron">
-                <h3>Correct Answers:</h3>
+                <h3>Answer Details:</h3>
                 <div id="scantron-list"></div>
             </div>
             <div style="text-align: center; margin-top: 20px;">
@@ -359,12 +407,18 @@ pmm: [
         function showScore() {
             document.getElementById('quiz-container').classList.add('hidden');
             document.getElementById('score-section').classList.remove('hidden');
-            document.getElementById('score').innerText = `You scored ${score} out of ${currentQuestions.length}`;
+
+            const totalQuestions = currentQuestions.length;
+            const scorePercentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('score-percentage').innerText = `${scorePercentage}%`;
+            document.getElementById('correct-count').innerText = score;
+            document.getElementById('incorrect-count').innerText = totalQuestions - score;
+            document.getElementById('total-questions').innerText = totalQuestions;
 
             let recommendation = "Try again to improve your score!";
-            if (score >= 8) {
+            if (scorePercentage >= 80) {
                 recommendation = "Excellent! You really know your stuff.";
-            } else if (score >= 5) {
+            } else if (scorePercentage >= 50) {
                 recommendation = "Good job! But there’s room for improvement.";
             }
             document.getElementById('recommendation').innerText = recommendation;
@@ -372,8 +426,8 @@ pmm: [
             const scantronList = document.getElementById('scantron-list');
             scantronList.innerHTML = '';
             userAnswers.forEach((answer, index) => {
-                const item = document.createElement('div');
                 const isCorrect = answer.selected === answer.correct;
+                const item = document.createElement('div');
                 item.className = 'scantron-item ' + (isCorrect ? 'correct' : 'incorrect');
                 item.innerHTML = `
                     <strong>Q${index + 1}: ${answer.question}</strong><br>
@@ -395,7 +449,7 @@ pmm: [
         }
 
         function logout() {
-            alert("Logging out..."); // Replace this with actual logout functionality if applicable
+            alert("Logging out...");
             goHome();
         }
     </script>
